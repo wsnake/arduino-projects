@@ -25,8 +25,8 @@ void setup() {
     pinMode(9, OUTPUT);
     pinMode(10, OUTPUT);
     
-    digitalWrite(9, HIGH);
-    digitalWrite(10, HIGH);
+    digitalWrite(9, LOW);
+    digitalWrite(10, LOW);
     
     Serial.begin(9600);
     irrecv.enableIRIn();
@@ -87,31 +87,45 @@ void loop() {
 //    }
 }
 
+void run() {
+    for (int i = 0; i < 255; i += 5) {
+        analogWrite(9, i);
+        analogWrite(10, i);
+        delay(10);
+    }
+}
+
 void forward() {
     stopall();
     digitalWrite(2, HIGH);
     digitalWrite(4, HIGH);
+    run();
 }
 
 void backward() {
     stopall();
     digitalWrite(3, HIGH);
     digitalWrite(5, HIGH);
+    run();
 }
 
 void right() {
     stopall();
     digitalWrite(2, HIGH);
     digitalWrite(5, HIGH);
+    run();
 }
 
 void left() {
     stopall();
     digitalWrite(3, HIGH);
     digitalWrite(4, HIGH);
+    run();
 }
 
 void stopall() {
+    digitalWrite(9, LOW);
+    digitalWrite(10, LOW);
     for (int i = 2; i <= 5; i++) {
         digitalWrite(i, LOW);
     }
